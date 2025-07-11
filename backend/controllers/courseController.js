@@ -2,14 +2,13 @@
 import Course from "../models/Course.js"
 
 export const createCourse = async (req, res) => {
-  const { courseId, courseName, description } = req.body
+  console.log("💡 Request Body:", req.body)
   try {
-    const existing = await Course.findOne({ courseId })
-    if (existing) return res.status(400).json({ message: "Course ID already exists" })
-
-    const course = await Course.create({ courseId, courseName, description })
+    const course = await Course.create(req.body)
+    console.log("✅ Course Created:", course)
     res.status(201).json(course)
   } catch (err) {
+    console.error("❌ Error on createCourse:", err)
     res.status(500).json({ message: err.message })
   }
 }
