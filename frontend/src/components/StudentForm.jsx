@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const StudentForm = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +18,7 @@ const StudentForm = () => {
   const [courses, setCourses] = useState([])
 
   const token = localStorage.getItem('token')
+  const navigate = useNavigate() // ✅ add navigation hook
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -46,18 +48,7 @@ const StudentForm = () => {
         }
       })
       alert('✅ Student enrolled successfully')
-      setFormData({
-        name: '',
-        fatherName: '',
-        dob: '',
-        cnic: '',
-        fatherCnic: '',
-        course: '',
-        contactNo: '',
-        address: '',
-        email: ''
-      })
-      setPicture(null)
+      navigate('/students') // ✅ redirect to student list
     } catch (err) {
       alert('❌ ' + (err.response?.data?.message || 'Submission failed'))
     }
@@ -67,6 +58,8 @@ const StudentForm = () => {
     <form onSubmit={handleSubmit} className="card p-4 mb-4 shadow-sm">
       <h5 className="mb-3">🎓 Student Enrollment</h5>
       <div className="row g-3">
+        {/* form inputs same as before */}
+        {/* no change in structure below this point */}
         <div className="col-md-4">
           <input className="form-control" name="name" placeholder="Full Name" value={formData.name} onChange={handleChange} required />
         </div>
@@ -76,7 +69,6 @@ const StudentForm = () => {
         <div className="col-md-4">
           <input className="form-control" name="dob" type="date" value={formData.dob} onChange={handleChange} required />
         </div>
-
         <div className="col-md-4">
           <input className="form-control" name="cnic" placeholder="CNIC" value={formData.cnic} onChange={handleChange} required />
         </div>
@@ -91,7 +83,6 @@ const StudentForm = () => {
             ))}
           </select>
         </div>
-
         <div className="col-md-4">
           <input className="form-control" name="contactNo" placeholder="Contact No" value={formData.contactNo} onChange={handleChange} required />
         </div>
@@ -101,7 +92,6 @@ const StudentForm = () => {
         <div className="col-md-4">
           <input className="form-control" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
         </div>
-
         <div className="col-md-6">
           <input type="file" className="form-control" onChange={(e) => setPicture(e.target.files[0])} accept="image/*" />
         </div>

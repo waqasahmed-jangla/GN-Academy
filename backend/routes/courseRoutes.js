@@ -1,4 +1,3 @@
-// backend/routes/courseRoutes.js
 import express from "express"
 import {
   createCourse,
@@ -7,12 +6,12 @@ import {
   updateCourse,
   deleteCourse,
 } from "../controllers/courseController.js"
-import { protect } from "../middleware/authMiddleware.js"
-import { authorizeRoles } from "../middleware/roleMiddleware.js"
+
+import { protect, authorizeRoles } from "../middleware/authMiddleware.js"
 
 const router = express.Router()
 
-// All routes below are protected and allowed only for admin
+// ✅ Apply protection and role restriction
 router.use(protect, authorizeRoles("admin"))
 
 router.get("/", getCourses)

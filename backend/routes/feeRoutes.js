@@ -1,10 +1,10 @@
 import express from "express"
 import { createFee, getFees } from "../controllers/feeController.js"
-import { protect } from "../middleware/authMiddleware.js"
-import { authorizeRoles } from "../middleware/roleMiddleware.js"
+import { protect, authorizeRoles } from "../middleware/authMiddleware.js"
 
 const router = express.Router()
 
+// ✅ Protect all fee routes
 router.use(protect, authorizeRoles("admin", "deo"))
 
 router.get("/", getFees)

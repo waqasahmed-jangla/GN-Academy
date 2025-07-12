@@ -1,5 +1,5 @@
 body {
-  background: linear-gradient(135deg, #138d75, #0e6655);
+  background: linear-gradient(135deg, #d3ece7, #b1f5e7);
   height: 100vh;
   margin: 0;
 }
@@ -22,7 +22,7 @@ body {
 }
 
 .login-card .btn-primary {
-  background-color: #6610f2;
+  background-color: #9a95dba6;
   border-color: #6610f2;
 }
 

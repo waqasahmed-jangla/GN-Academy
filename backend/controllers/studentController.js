@@ -8,14 +8,19 @@ export const createStudent = async (req, res) => {
       course, contactNo, address, email
     } = req.body
 
-    const picture = req.file ? req.file.filename : null
-
-    const existing = await Student.findOne({ cnic })
-    if (existing) return res.status(400).json({ message: "Student already exists" })
+    const picture = req.file ? `uploads/${req.file.filename}` : null
 
     const student = await Student.create({
-      name, fatherName, dob, cnic, fatherCnic,
-      course, contactNo, address, email, picture
+      name,
+      fatherName,
+      dob,
+      cnic,
+      fatherCnic,
+      course,
+      contactNo,
+      address,
+      email,
+      picture
     })
 
     res.status(201).json(student)
@@ -33,3 +38,19 @@ export const getStudents = async (req, res) => {
   }
   
 }
+export const getStudentById = async (req, res) => {
+  const student = await Student.findById(req.params.id).populate('course')
+  if (!student) return res.status(404).json({ message: 'Not found' })
+  res.json(student)
+}
+
+export const updateStudent = async (req, res) => {
+  const student = await Student.findByIdAndUpdate(req.params.id, req.body, { new: true })
+  res.json(student)
+}
+
+export const deleteStudent = async (req, res) => {
+  await Student.findByIdAndDelete(req.params.id)
+  res.json({ message: 'Student deleted' })
+}
+
